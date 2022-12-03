@@ -58,3 +58,8 @@ dalvik.vm.dex2oat64.enabled=true
     ro.vendor.qti.cgroup_follow.enable=true \
     persist.vendor.qti.inputopts.enable=true \
     persist.vendor.qti.inputopts.movetouchslop=0.6 \
+    
+ # System
+PRODUCT_DEXPREOPT_SPEED_APPS += \
+    Settings \
+    SystemUI
