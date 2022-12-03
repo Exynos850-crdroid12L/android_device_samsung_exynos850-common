@@ -61,7 +61,6 @@ PRODUCT_PACKAGES += \
     android.hardware.camera.provider@2.5-service_64.exynos850 \
     libsensorndkbridge \
     libshim_sensorndkbridge
-    GcamGo
 
 # Display
 PRODUCT_PACKAGES += \
