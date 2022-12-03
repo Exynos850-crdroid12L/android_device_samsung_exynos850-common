@@ -29,6 +29,11 @@ TARGET_BOOTANIMATION_HALF_RES := true
 # HWUI
 HWUI_COMPILE_FOR_PERF := true
 
+# System
+PRODUCT_DEXPREOPT_SPEED_APPS += \
+    Settings \
+    SystemUI
+
 # Bootloader
 TARGET_BOOTLOADER_BOARD_NAME := exynos850
 
