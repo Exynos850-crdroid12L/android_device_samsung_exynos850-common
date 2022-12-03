@@ -61,6 +61,7 @@ PRODUCT_PACKAGES += \
     android.hardware.camera.provider@2.5-service_64.exynos850 \
     libsensorndkbridge \
     libshim_sensorndkbridge
+    GcamGo
 
 # Display
 PRODUCT_PACKAGES += \
@@ -295,3 +296,4 @@ PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/configs/wifi/wpa_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/wpa_supplicant_overlay.conf
 
 PRODUCT_CFI_INCLUDE_PATHS += hardware/samsung_slsi/scsc_wifibt/wpa_supplicant_lib
+
