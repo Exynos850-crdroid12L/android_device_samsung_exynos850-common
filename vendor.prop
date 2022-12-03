@@ -39,3 +39,6 @@ ro.vendor.cscsupported=1
 ro.product_ship=true
 ro.telephony.default_network=9,9
 vendor.sec.rild.libpath=/vendor/lib64/libsec-ril.so
+
+# Zygote
+zygote.critical_window.minute=10
