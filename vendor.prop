@@ -51,3 +51,10 @@ pm.dexopt.install=speed-profile
 dalvik.vm.image-dex2oat-filter=speed
 dalvik.vm.image-dex2oat-threads=8
 dalvik.vm.dex2oat64.enabled=true
+
+# Fling
+    ro.min.fling_velocity=160 \
+    ro.max.fling_velocity=20000 \
+    ro.vendor.qti.cgroup_follow.enable=true \
+    persist.vendor.qti.inputopts.enable=true \
+    persist.vendor.qti.inputopts.movetouchslop=0.6 \
