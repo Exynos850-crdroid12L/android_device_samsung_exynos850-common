@@ -282,6 +282,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.vibrator-service.exynos850
 
+# GoogleCameraGo
+PRODUCT_PACKAGES += \
+    GoogleCameraGo
+
 # WiFi
 PRODUCT_PACKAGES += \
     WifiOverlay \
