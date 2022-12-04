@@ -118,6 +118,7 @@ PRODUCT_PACKAGES += \
 
 # init
 PRODUCT_COPY_FILES += \
+    $(COMMON_PATH)/configs/init/fstab.zram:$(TARGET_COPY_OUT_VENDOR)/etc/fstab.zram \
     $(COMMON_PATH)/configs/init/fstab.exynos850:$(TARGET_COPY_OUT_RAMDISK)/fstab.exynos850 \
     $(COMMON_PATH)/configs/init/fstab.exynos850:$(TARGET_COPY_OUT_VENDOR)/etc/fstab.exynos850 \
     $(COMMON_PATH)/configs/init/init.exynos850.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/init.exynos850.rc \

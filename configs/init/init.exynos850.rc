@@ -211,6 +211,18 @@ on post-fs-data
     chown system radio /sys/class/camera/flash/rear_flash
     chown cameraserver system /sys/class/camera/flash/rear_torch_flash
 
+on property:sys.boot_completed=1
+    # Read only one page at a time
+    write /proc/sys/vm/page-cluster 0
+    # Swap more aggressively
+    write /proc/sys/vm/swappiness 100
+    # Set zRAM compression algorithm to LZ4
+    write /sys/block/zram0/comp_algorithm lz4
+    # Enable zRAM data deduplication feature
+    write /sys/block/zram0/use_dedup 1
+    # Mount swap partitions specified in fstab
+    swapon_all /vendor/etc/fstab.zram
+
     ## Rear2 camera permission
     chown system radio /sys/class/camera/rear/rear2_camfw
     chown system radio /sys/class/camera/rear/rear2_camfw_full
