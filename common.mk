@@ -56,6 +56,9 @@ PRODUCT_COPY_FILES += \
 # Bootanimation
 TARGET_BOOTANIMATION_HALF_RES := true
 
+# Remove Apps
+TARGET_EXCLUDES_AUDIOFX := true
+
 # Camera
 PRODUCT_PACKAGES += \
     android.hardware.camera.provider@2.5-service_64.exynos850 \
