@@ -53,11 +53,6 @@ on post-fs-data
     chown system radio /sys/class/sensors/light_sensor/light_circle
     chown system radio /sys/class/sensors/light_sensor/algo_mode
 
-# dex2oat
-on property:persist.sys.device_provisioned=1
-    setprop dalvik.vm.dex2oat-cpu-set 0,1,2,3,4,7
-    setprop dalvik.vm.dex2oat-threads 6
-
 # [ Permissions for Grip Sensor
 # SX93xx
     chown system radio /sys/class/sensors/grip_sensor/name
