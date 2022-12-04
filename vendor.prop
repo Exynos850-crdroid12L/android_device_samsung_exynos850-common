@@ -43,15 +43,6 @@ vendor.sec.rild.libpath=/vendor/lib64/libsec-ril.so
 # Zygote
 zygote.critical_window.minute=10
 
-# Dex2oat
-pm.dexopt.first-boot=quicken
-pm.dexopt.bg-dexopt=everything
-pm.dexopt.boot=verify
-pm.dexopt.install=speed-profile
-dalvik.vm.image-dex2oat-filter=speed
-dalvik.vm.image-dex2oat-threads=8
-dalvik.vm.dex2oat64.enabled=true
-
 # Fling
     ro.min.fling_velocity=160 \
     ro.max.fling_velocity=20000 \
