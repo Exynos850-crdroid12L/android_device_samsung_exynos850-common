@@ -1,5 +1,6 @@
 on early-init
     mkdir /mnt/vendor/efs 0771 radio system
+    mkdir /mnt/vendor/cpefs 0771 radio system
     mkdir /mnt/vendor/persist 0771 system system
     mount debugfs /sys/kernel/debug /sys/kernel/debug
 
@@ -116,6 +117,9 @@ on init
     chown system system /dev/nanohub
     chown system system /dev/nanohub_comms
 
+    #SystemPerformance - ActivityManagerPerformance
+    setprop sys.config.amp_to_app_switch 6000
+
     # Configuration to G2D blocking mode
     write /sys/module/g2d_task/parameters/block_on_contension 1
 
@@ -178,6 +182,7 @@ on post-fs-data
 # Permissions Camera
     mkdir /data/vendor/camera 0770 cameraserver system
     chown cameraserver cameraserver /sys/kernel/mm/vmscan/mem_boost_mode
+    chown cameraserver cameraserver /sys/kernel/ems/ecs/enabled
     chown system radio /sys/class/camera/rear/rear_camfw
     chown system radio /sys/class/camera/rear/rear_camfw_full
     chown system radio /sys/class/camera/rear/rear_checkfw_user
@@ -316,7 +321,7 @@ on property:sys.boot_completed=1
 on boot
     # SDHMS Slowdown : Cpuset
     mkdir /dev/cpuset/abnormal
-    write /dev/cpuset/abnormal/cpus 0-3
+    write /dev/cpuset/abnormal/cpus 0-2
     copy /dev/cpuset/mems /dev/cpuset/abnormal/mems
     chown system system /dev/cpuset/abnormal
     chown system system /dev/cpuset/abnormal/tasks
@@ -324,8 +329,20 @@ on boot
     chmod 0664 /dev/cpuset/abnormal/tasks
     chmod 0664 /dev/cpuset/abnormal/cpus
 
+    mkdir /dev/cpuset/moderate
+    write /dev/cpuset/moderate/cpus 0-6
+    copy /dev/cpuset/mems /dev/cpuset/moderate/mems
+
+    chown system system /dev/cpuset/moderate
+    chown system system /dev/cpuset/moderate/tasks
+    chown system system /dev/cpuset/moderate/cpus
+    chmod 0664 /dev/cpuset/moderate/tasks
+    chmod 0664 /dev/cpuset/moderate/cpus
+
     setprop wifi.interface wlan0
     write /proc/sys/vm/min_free_order_shift 4
+
+    write /sys/module/zram/parameters/zram_balance_ratio 40
 
     restorecon_recursive /sys/kernel/debug
     #write /sys/module/scsc_mx/parameters/disable_recovery_handling 2
@@ -339,9 +356,6 @@ on boot
     chmod 0660 /efs/lpm_info.log
 
     setprop ro.radio.noril no
-
-	# remove resampling
-    setprop ro.input.resampling 0
 
     # Set up kernel tracing, but disable it by default
     chmod 0222 /sys/kernel/debug/tracing/trace_marker
@@ -532,11 +546,14 @@ on fs
     mount ext4 /dev/block/by-name/spu /spu nosuid nodev noatime noauto_da_alloc,discard,journal_checksum,data=ordered,errors=panic
 
     restorecon_recursive /mnt/vendor/efs
+    restorecon_recursive /mnt/vendor/cpefs
     restorecon_recursive /mnt/vendor/persist
     restorecon_recursive /data
 
     chown radio system /mnt/vendor/efs
     chmod 0771 /mnt/vendor/efs
+    chown radio system /mnt/vendor/cpefs
+    chmod 0771 /mnt/vendor/cpefs
     chown system system /mnt/vendor/persist
 
     mkdir /mnt/vendor/persist/data/sfs 0700 system system
@@ -704,17 +721,6 @@ service prepare_param /system/bin/prepare_param.sh /dev/block/platform/12100000.
     seclabel u:r:prepare_param:s0
     oneshot
 
-# Pageboostd
-on property:sys.boot_completed=1
-    start pageboostd
-
-service pageboostd /system/bin/pageboostd
-    class main
-    user system
-    group system mount radio net_bt sdcard_rw shell media media_rw
-    socket pageboostd seqpacket 0660 system system
-    disabled
-
 # SSU (Samsung SIM Unlock)
 on property:ro.boot.carrierid=MXO
     setprop ssu.support 1
@@ -730,6 +736,8 @@ service swapon /system/bin/sswap -d 3 -x 160 -y 130
     capabilities SYS_ADMIN
     seclabel u:r:sswap:s0
     oneshot
+	
+on boot
 
 # Set watchdog timer to 40 seconds and pet it every 10 seconds to get a 30 second margin
 # Increase watchdogd priority for keeping up schedule
@@ -741,10 +749,10 @@ service watchdogd /system/bin/watchdogd 10 30
 
 # sensorhub fw
 on post-fs
-    chmod 0770 /spu/sensorhub
-    chmod 0660 /spu/sensorhub/shub_spu.bin
-    chown root system /spu/sensorhub
-    chown root system /spu/sensorhub/shub_spu.bin
+#    chmod 0770 /spu/sensorhub
+#    chmod 0660 /spu/sensorhub/shub_spu.bin
+#    chown root system /spu/sensorhub
+#    chown root system /spu/sensorhub/shub_spu.bin
     write /sys/class/sensors/ssp_sensor/fs_ready 1
 
 # Sensors permissions
@@ -793,3 +801,22 @@ on post-fs-data
 
 # Meta event
     chown system radio /sys/class/sensors/sensor_dev/flush
+# Grip Sensor
+    chown system radio /sys/class/sensors/grip_sensor/noti_enable
+
+# Create carrier folder for HiddenMenu
+on post-fs
+    mkdir /efs/carrier 0755 radio system
+    chown radio system /efs/carrier
+    chown radio system /efs/carrier/HiddenMenu
+
+# Pageboostd
+on property:sys.boot_completed=1
+    start pageboostd
+
+service pageboostd /system/bin/pageboostd
+    class main
+    user system
+    group system mount radio net_bt sdcard_rw shell media media_rw
+    socket pageboostd seqpacket 0660 system system
+    disabled

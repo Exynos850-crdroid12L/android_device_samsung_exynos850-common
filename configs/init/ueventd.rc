@@ -177,6 +177,7 @@
 # TEEGRIS
 /dev/tzdev                0666   system     system
 /dev/tziwsock             0666   system     system
+/dev/tziwshmem            0660   system     system
 /dev/ionfd2phys           0660   system     system
 /dev/tzirs                0660   system     system
 /dev/tuihw                0660   system     system
@@ -236,10 +237,10 @@
 /dev/scsc_log_collector_0 0660   wifi     wifi
 
 # Google FRP solution
-/dev/block/platform/12100000.dwmmc0/by-name/persistent    0660    system    system
+/dev/block/by-name/persistent    0660    system    system
 
 # Reactivation lock
-/dev/block/platform/12100000.dwmmc0/by-name/steady    0660    system    system
+/dev/block/by-name/steady    0660    system    system
 
 # Sensor Hub
 /dev/ssp_sensorhub        0660   system     system
