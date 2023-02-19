@@ -6,13 +6,12 @@ odm                                            /odm                 ext4    ro,e
 
 /dev/block/by-name/metadata                    /metadata            ext4    noatime,nosuid,nodev,noauto_da_alloc,discard,journal_checksum,data=ordered,errors=panic,sync wait,first_stage_mount,formattable,check
 
-/dev/block/by-name/boot                        /boot                emmc    defaults                                                                                                                          recoveryonly
-/dev/block/by-name/recovery                    /recovery            emmc    defaults                                                                                                                          recoveryonly
-/dev/block/by-name/cache                       /cache               ext4    noatime,nosuid,nodev,noauto_da_alloc,discard,journal_checksum,data=ordered,errors=panic                                           wait,check
-/dev/block/by-name/userdata                    /data                f2fs    noatime,nosuid,nodev,discard,noflush_merge,reserve_root=134217,resgid=1065,inlinecrypt,checkpoint_merge,fsync_mode=nobarrier      wait,check,formattable,quota,latemount,reservedsize=128m,checkpoint=fs,fileencryption=aes-256-xts:aes-256-cts:v2,keydirectory=/metadata/vold/metadata_encryption
-/dev/block/by-name/efs                         /mnt/vendor/efs	    ext4    noatime,nosuid,nodev,noauto_da_alloc,discard,journal_checksum,data=ordered,errors=panic                                           wait,check
-/dev/block/by-name/misc                        /misc                emmc    defaults                                                                                                                          defaults
-/dev/block/by-name/vbmeta                      /vbmeta              emmc    defaults                                                                                                                          first_stage_mount
+/dev/block/by-name/boot                        /boot                emmc    defaults                                                                                     recoveryonly
+/dev/block/by-name/recovery                    /recovery            emmc    defaults                                                                                     recoveryonly          
+/dev/block/by-name/cache                       /cache               ext4    noatime,nosuid,nodev,noauto_da_alloc,discard,journal_checksum,data=ordered,errors=panic      wait,check
+/dev/block/by-name/userdata                    /data                ext4    noatime,nosuid,nodev,noauto_da_alloc,discard,journal_checksum,data=ordered,errors=panic      latemount,wait,check,fileencryption=aes-256-xts,reservedsize=128M,quota
+/dev/block/by-name/efs                         /mnt/vendor/efs	    ext4    noatime,nosuid,nodev,noauto_da_alloc,discard,journal_checksum,data=ordered,errors=panic      wait,check
+/dev/block/by-name/misc                        /misc                emmc    defaults       defaults
 
 /devices/platform/13500000.dwmmc2/mmc_host*    auto                 auto    default        voldmanaged=sdcard:auto,encryptable=userdata
 /devices/platform/13600000.usb*                auto                 auto    default        voldmanaged=usb:auto
