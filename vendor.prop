@@ -45,4 +45,21 @@ ro.telephony.default_network=9,9
 vendor.sec.rild.libpath=/vendor/lib64/libsec-ril.so
 
 # Zygote
-zygote.critical_window.minute=10    
+zygote.critical_window.minute=10
+
+# Dex2oat
+pm.dexopt.first-boot=quicken
+pm.dexopt.bg-dexopt=everything
+pm.dexopt.boot=verify
+pm.dexopt.install=speed-profile
+dalvik.vm.image-dex2oat-filter=speed
+dalvik.vm.image-dex2oat-threads=8
+dalvik.vm.dex2oat64.enabled=true
+
+# Fling
+    ro.min.fling_velocity=160 \
+    ro.max.fling_velocity=20000 \
+    ro.vendor.qti.cgroup_follow.enable=true \
+    persist.vendor.qti.inputopts.enable=true \
+    persist.vendor.qti.inputopts.movetouchslop=0.6 \
+>>>>>>> parent of e7dcc0f (exynos 850 common: Use speed tuning for performance critical applications )
